@@ -1,4 +1,4 @@
-/* Copyright 2015 Google Inc. All Rights Reserved.
+/* Copyright 2015 The TensorFlow Authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ limitations under the License.
 
 namespace tensorflow {
 
-size_t StringPiece::Hasher::operator()(StringPiece s) const {
+size_t StringPieceHasher::operator()(StringPiece s) const {
   return Hash64(s.data(), s.size());
 }
 
@@ -40,7 +40,7 @@ size_t StringPiece::find(char c, size_t pos) const {
   }
   const char* result =
       reinterpret_cast<const char*>(memchr(data_ + pos, c, size_ - pos));
-  return result != NULL ? result - data_ : npos;
+  return result != nullptr ? result - data_ : npos;
 }
 
 // Search range is [0..pos] inclusive.  If pos == npos, search everything.
@@ -52,14 +52,6 @@ size_t StringPiece::rfind(char c, size_t pos) const {
     }
   }
   return npos;
-}
-
-bool StringPiece::Consume(StringPiece x) {
-  if (starts_with(x)) {
-    remove_prefix(x.size_);
-    return true;
-  }
-  return false;
 }
 
 StringPiece StringPiece::substr(size_t pos, size_t n) const {

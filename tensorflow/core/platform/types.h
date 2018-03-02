@@ -1,4 +1,4 @@
-/* Copyright 2015 Google Inc. All Rights Reserved.
+/* Copyright 2015 The TensorFlow Authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,14 +20,22 @@ limitations under the License.
 #include "tensorflow/core/platform/platform.h"
 
 // Include appropriate platform-dependent implementations
-#if defined(PLATFORM_GOOGLE)
+#if defined(PLATFORM_GOOGLE) || defined(GOOGLE_INTEGRAL_TYPES)
 #include "tensorflow/core/platform/google/integral_types.h"
+#elif defined(PLATFORM_WINDOWS)
+#include "tensorflow/core/platform/windows/integral_types.h"
 #elif defined(PLATFORM_POSIX) || defined(PLATFORM_POSIX_ANDROID) || \
     defined(PLATFORM_GOOGLE_ANDROID)
 #include "tensorflow/core/platform/default/integral_types.h"
 #else
 #error Define the appropriate PLATFORM_<foo> macro for this platform
 #endif
+
+#if defined(PLATFORM_WINDOWS)
+#include "tensorflow/core/platform/windows/cpu_info.h"
+#endif
+
+#include "tensorflow/core/lib/bfloat16/bfloat16.h"
 
 namespace tensorflow {
 

@@ -1,4 +1,4 @@
-/* Copyright 2016 Google Inc. All Rights Reserved.
+/* Copyright 2016 The TensorFlow Authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -60,9 +60,16 @@ class CallOptions {
   void SetCancelCallback(CancelFunction cancel_func);
   void ClearCancelCallback();
 
+  // Get and set operation timeout. Timeout value is in milliseconds.
+  int64 GetTimeout();
+  void SetTimeout(int64 ms);
+
  private:
   mutex mu_;
   CancelFunction cancel_func_ GUARDED_BY(mu_);
+
+  // RPC operation timeout in milliseconds.
+  int64 timeout_in_ms_ GUARDED_BY(mu_);
 
   TF_DISALLOW_COPY_AND_ASSIGN(CallOptions);
 };
